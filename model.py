@@ -19,16 +19,18 @@ class Location(db.Model):
 
     __tablename__ = "gb_map_locations"
 
-    location = db.Column(db.Integer, primary_key=True)
+    marker_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    gb_lat = db.Column(db.String(15), nullable=True)
+    gb_long = db.Column(db.String(15), nullable=True)
     #this is probably wrong, I'm not sure how to present coordinates as a key
     #maybe ghostbike_id should function as the primary key, not sure
     #look up if address can be a db.value
-    ghostbike_id = db.Column(db.Integer)
+    gb_id = db.Column(db.Integer, db.ForeignKey('ghostbikes.ghostbike_id'))
     #ghostbike_id is the foreign key fro the ghostbikes and ghostbike_photos tables
 
     def __repr__(self):
         """provide helpful representation when printed."""
-        return f"<Location ghostbike_location={self.location} ghostbike_id={self.ghostbike_id}>"
+        return f"<Location gb_id{self.gb_id} gb_lat={self.gb_lat} gb_long={self.gb_long}>"
 
 
 
@@ -37,16 +39,16 @@ class Ghostbike(db.model):
 
     __tablename__ = "ghostbikes"
 
-    ghostbike_id = db.Column(db.Integer, primary_key=True)
-    accident_date = db.Column(db.Integer)
+    ghostbike_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    accident_date = db.Column(db.Integer, nullable=True)
     #I need to figure out datetime for accident_date
-    cyclist_name = db.Column(db.String(50))
+    cyclist_name = db.Column(db.String(50), nullable=True)
     #maybe I can get away with two cyclist_name entries for one incident if
     #that's what happened
-    in_memoriam = db.Column(db.String(1000))
+    in_memoriam = db.Column(db.String(1000), nullable=True)
     #short blurb about the cyclist, not sure if it belongs in a table because so
     #many characters
-    is_verified = db.Column(db.Boolean)
+    is_verified = db.Column(db.Integer, nullable=False)
     #can you make a column value a boolean?
 
     def __repr__(self):
@@ -60,13 +62,14 @@ class Photo(db.Model):
 
     __tablename__ = "ghostbike_photos"
 
-    photo_id = db.Column(db.Integer)
-    submitted_by = db.Column(db.String(100))
-    ghostbike_id = db.Column(db.Integer)
-    submission_id = db.Column(db.Integer)
-    submission_date = db.Column(db.Integer)
+    photo_id = db.Column(db.Integer, nullable=False, autoincrement=True, primary_key=True)
+    submitted_by = db.Column(db.String(100), db.ForeignKey('users.user_id'))
+    ghostbike_id = db.Column(db.Integer, db.ForeignKey('ghostbikes.ghostbike_id'))
+    submission_id = db.Column(db.Integer, autoincrement=True, nullable=False)
+    submission_date = db.Column(db.timestamp, nullable=False)
     #Again, not sure about doing something with datetime here
-    photo_location = db.Column(db.Varchar(100))
+    photo_lat = db.Column(db.String(15))
+    photo_long = db.Column(db.String(15))
     #Also not sure how to describe an address
 
 
@@ -82,12 +85,12 @@ class User(db.Model):
 
     __tablename__ = "users"
 
+    user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     username = db.Column(db.String(50))
     password = db.Column(db.Varchar(30))
     #I don't want this displayed in the table I guess, maybe there's a way to hide it
     is_discoverable = db.Column(db.Integer)
     #maybe it's easier to make a boolean value an integer?
-    user_id = db.Column(db.Integer, primary_key=True)
 
     def __repr__(self):
         """provide helpful user/username representation when printed"""
@@ -115,7 +118,7 @@ def connect_to_db(app):
     """Connect the database to our Flask app."""
 
     # Configure to use our PostgreSQL database
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///ratings'
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///ghostbikes'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     app.config['SQLALCHEMY_ECHO'] = True
     db.app = app

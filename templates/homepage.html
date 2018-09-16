@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block head %}
+{% endblock %}
+
+{% block body %}
+
+
+<div>
+    <p>Default map image goes here</p>
+</div>
+
+
+<footer>
+    <p>People deserve to be remembered</p>
+</footer>
+
+<script>
+    function updateButton(data) {
+        console.log(data);
+        if (data == "True") {
+            console.log(data)
+            let loginButton = document.querySelector("#login-nav-link");
+            loginButton.innerText = 'Logout';
+            loginButton.setAttribute('href', '/logout');
+        }        
+    }
+
+    function checkLogin(){
+        //use ajax to make a call to the checkLogin() route
+        console.log("In checkLogin");
+        $.get('/check_login', updateButton);
+    }
+
+    checkLogin();
+</script>
+
+{% endblock %}

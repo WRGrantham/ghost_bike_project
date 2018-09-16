@@ -1,11 +1,13 @@
 """Models and database functions for ghost_bike_project."""
 from flask_sqlalchemy import SQLAlchemy
-import correlation
+
 from collections import defaultdict
 
 # This is the connection to the PostgreSQL database; we're getting this through
 # the Flask-SQLAlchemy helper library. On this, we can find the `session`
 # object, where we do most of our interactions (like committing, etc.)
+
+#My database is called ghostbikes
 
 db = SQLAlchemy()
 
@@ -22,9 +24,6 @@ class Location(db.Model):
     marker_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     gb_lat = db.Column(db.String(15), nullable=True)
     gb_long = db.Column(db.String(15), nullable=True)
-    #this is probably wrong, I'm not sure how to present coordinates as a key
-    #maybe ghostbike_id should function as the primary key, not sure
-    #look up if address can be a db.value
     gb_id = db.Column(db.Integer, db.ForeignKey('ghostbikes.ghostbike_id'))
     #ghostbike_id is the foreign key fro the ghostbikes and ghostbike_photos tables
 
@@ -34,7 +33,7 @@ class Location(db.Model):
 
 
 
-class Ghostbike(db.model):
+class Ghostbike(db.Model):
     """ghostbike instance model"""
 
     __tablename__ = "ghostbikes"
@@ -49,7 +48,6 @@ class Ghostbike(db.model):
     #short blurb about the cyclist, not sure if it belongs in a table because so
     #many characters
     is_verified = db.Column(db.Integer, nullable=False)
-    #can you make a column value a boolean?
 
     def __repr__(self):
         """provide helpful ghostbike representation when printed"""
@@ -63,10 +61,10 @@ class Photo(db.Model):
     __tablename__ = "ghostbike_photos"
 
     photo_id = db.Column(db.Integer, nullable=False, autoincrement=True, primary_key=True)
-    submitted_by = db.Column(db.String(100), db.ForeignKey('users.user_id'))
+    submitted_by = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     ghostbike_id = db.Column(db.Integer, db.ForeignKey('ghostbikes.ghostbike_id'))
     submission_id = db.Column(db.Integer, autoincrement=True, nullable=False)
-    submission_date = db.Column(db.timestamp, nullable=False)
+    submission_date = db.Column(db.Date, nullable=False)
     #Again, not sure about doing something with datetime here
     photo_lat = db.Column(db.String(15))
     photo_long = db.Column(db.String(15))
@@ -87,7 +85,7 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     username = db.Column(db.String(50))
-    password = db.Column(db.Varchar(30))
+    password = db.Column(db.String(30))
     #I don't want this displayed in the table I guess, maybe there's a way to hide it
     is_discoverable = db.Column(db.Integer)
     #maybe it's easier to make a boolean value an integer?

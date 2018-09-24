@@ -6,38 +6,26 @@
 
 {% block body %}
 
-<h2>Submit Ghost Bike</h2>
-<h1>photo and location</h1>
+  <h2>Submit Ghost Bike</h2>
+  <h1>photo and location</h1>
 
   <div class=login-form>
 
-    <form class="form-signin" method="POST">
 
-        <h2 class="form-signin-heading">Please Sign In</h2>
 
-        <div class="form-group">
-            <label for="username-field" class="sr-only">Username</label>
-            <input type="username"
-                   name="username"
-                   class="form-control input-lg"
-                   placeholder="Username"
-                   required
-                   autofocus>
-        </div>
+    <form  method = "POST" 
+         enctype = "multipart/form-data">
+         <input type = "file" name = "file" />
+         <input type = "submit"/>
+      </form>
 
-        <div class="form-group">
-            <label for="password-field" class="sr-only">Password</label>
-            <input type="password"
-                   name="password"
-                   class="form-control input-lg"
-                   placeholder="Password"
-                   required>
-        </div>
 
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign In
-        </button>
+      {% if photo %}
+        <img src="data:image/png:base64,{{photo}}">
 
-    </form>
+      {% endif %}
+        <!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Upload Photo
+        </button> -->
 
   </div>
 

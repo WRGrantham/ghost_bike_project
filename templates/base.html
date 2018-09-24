@@ -25,12 +25,27 @@
         <li class="nav-item">
             <a class="nav-link" href="#">Link</a>
         </li>
+        {% if "user_id" in session %}
         <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" id="upload-gb" href="
+            http://0.0.0.0:5000/upload_gb_photo" >Upload GB</a>
         </li>
+        {% endif %}
+        {% if "user_id" not in session %}
         <li class="nav-item">
             <a class="nav-link" id="login-nav-link" href="http://0.0.0.0:5000/login">Login</a>
         </li>
+        {% endif %}
+        {% if "user_id" in session %}
+        <li class="nav-item">
+            <a class="nav-link" id="logout-nav-link" href="http://0.0.0.0:5000/logout">Logout</a>
+        </li>
+        {% endif %}
+        {% if "user_id" not in session %}
+        <li class="nav-item">
+            <a class="nav-link" id="signup-nav-link" href="http://0.0.0.0:5000/create_new_user">Sign UP</a>
+        </li>
+        {% endif %}
     </ul>
 
     {% with messages = get_flashed_messages() %}

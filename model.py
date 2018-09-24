@@ -63,11 +63,12 @@ class Photo(db.Model):
     photo_id = db.Column(db.Integer, nullable=False, autoincrement=True, primary_key=True)
     submitted_by = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     ghostbike_id = db.Column(db.Integer, db.ForeignKey('ghostbikes.ghostbike_id'))
-    submission_id = db.Column(db.Integer, autoincrement=True, nullable=False)
-    submission_date = db.Column(db.Date, nullable=False)
+    # *Looks like I prooobably don't need this** submission_id = db.Column(db.Integer, autoincrement=True, nullable=False)
+    # submission_date = db.Column(db.Date)
+    photo_blob = db.Column(db.LargeBinary, nullable=False)
     #Again, not sure about doing something with datetime here
-    photo_lat = db.Column(db.String(15))
-    photo_long = db.Column(db.String(15))
+    # photo_lat = db.Column(db.String(15))
+    # photo_long = db.Column(db.String(15))
     #Also not sure how to describe an address
 
 

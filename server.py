@@ -119,6 +119,7 @@ def upload_photo_sub():
         print(session)
 
         gb_photo = Photo(photo_blob=file.read(), submitted_by=session['user_id'])
+        # need to add submission_date=Date.now() I think to gb_photo
         print(session['user_id'])
         db.session.add(gb_photo)
         db.session.commit()
@@ -140,6 +141,11 @@ def upload_photo_sub():
 #     db.session.commit()
 
 #     return render_template("submit_gb_form.html")
+
+@app.route('/testmap', methods=['GET'])
+def display_testmap():
+    """displays a map to test me being able to show a map at all"""
+    return render_template("map.html")
 
 
     

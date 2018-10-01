@@ -25,7 +25,7 @@ class Location(db.Model):
     gb_lat = db.Column(db.String(15), nullable=True)
     gb_long = db.Column(db.String(15), nullable=True)
     gb_id = db.Column(db.Integer, db.ForeignKey('ghostbikes.ghostbike_id'))
-    #ghostbike_id is the foreign key fro the ghostbikes and ghostbike_photos tables
+    #ghostbike_id is the foreign key from the ghostbikes and ghostbike_photos tables
 
     def __repr__(self):
         """provide helpful representation when printed."""
@@ -64,6 +64,7 @@ class Photo(db.Model):
     submitted_by = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     ghostbike_id = db.Column(db.Integer, db.ForeignKey('ghostbikes.ghostbike_id'))
     # *Looks like I prooobably don't need this** submission_id = db.Column(db.Integer, autoincrement=True, nullable=False)
+    # reminder DATE - format YYYY-MM-DD
     # submission_date = db.Column(db.Date)
     photo_blob = db.Column(db.LargeBinary, nullable=False)
     #Again, not sure about doing something with datetime here

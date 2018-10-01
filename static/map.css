@@ -1,0 +1,49 @@
+/*--------------------------------*/
+/*Sitewide*/
+/*--------------------------------*/
+
+body {
+  background-color: none;
+  color: #020219
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  color: #fff;
+}
+
+a:active {
+  text-decoration: none;
+  color: #fff;
+}
+
+/*--------------------------------*/
+/*Homepage*/
+/*--------------------------------*/
+
+#bearlink {
+  padding: 200px;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 100;
+  font-size: 36px;
+  color: #fff;
+}
+
+/*--------------------------------*/
+/*Maps*/
+/*--------------------------------*/
+
+#bear-map {
+  width: 50%;
+  height: 350px;
+}
+
+.window-content {
+  color: #04162b;
+  width: 150px;
+}

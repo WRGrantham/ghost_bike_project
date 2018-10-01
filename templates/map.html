@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block head %}
+
+  <!-- FIXME-- MUST ADD API KEY HERE -->
+<script async defer
+       src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDal19_R4BpAWidH-pzt31O1DNDMH3WKbU">
+</script>
+<script src="https://code.jquery.com/jquery.js"></script>
+
+  <script src="/static/mapstyles.js"></script>
+
+  <script src="/static/map.js"></script>
+
+{% endblock %}
+
+
+{% block body %}
+   <div id="bear-map"></div>
+    {% block body2 %}
+      body of page goes here based on inheritance I guess
+    {% endblock %}
+{% endblock %}

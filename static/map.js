@@ -1,3 +1,5 @@
+var map;
+
 function initMap() {
 
     // Specify where the map is centered
@@ -6,7 +8,7 @@ function initMap() {
     let myLatLng = {lat: 37.2887639, lng: -122.0172811};
 
     // Create a map object and specify the DOM element for display.
-    let map = new google.maps.Map(document.getElementById('bear-map'), {
+    map = new google.maps.Map(document.getElementById('bear-map'), {
         center: myLatLng,
         scrollwheel: false,
         zoom: 12,
@@ -16,6 +18,12 @@ function initMap() {
         styles: MAPSTYLES,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
+
+    map.addListener('click', function(event) {
+          addMarker(event.latLng);
+        });
+
+
     console.log("HElloo??")
 
     // --------------------------------------------------------------//
@@ -49,7 +57,7 @@ function initMap() {
     });
 
     // Retrieving the information with AJAX
-    $.get('/bears.json', function (bears) {
+    // $.get('/bears.json', function (bears) {
       // Attach markers to each bear location in returned JSON
       // JSON looks like:
       // {
@@ -64,35 +72,44 @@ function initMap() {
       //   },...
       // }
       let bear, marker, html;
-
-      for (let key in bears) {
-            bear = bears[key];
-
-            // Define the marker
-                marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(bear.capLat, bear.capLong),
+      // map: map,
+      //               title: 'Bear ID: ' + bear.bearId,
+      //               icon: '/static/img/polar.png'
+      marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(37.2887639, -122.0172811),
                     map: map,
-                    title: 'Bear ID: ' + bear.bearId,
-                    icon: '/static/img/polar.png'
+                    title: 'HI',
+                    // icon: '/static/img/polar.png'
                 });
 
-            // Define the content of the infoWindow
-            html = (
-              '<div class="window-content">' +
-                    '<img src="/static/img/polarbear.jpg" alt="polarbear" style="width:150px;" class="thumbnail">' +
-                    '<p><b>Bear gender: </b>' + bear.gender + '</p>' +
-                    '<p><b>Bear birth year: </b>' + bear.birthYear + '</p>' +
-                    '<p><b>Year captured: </b>' + bear.capYear + '</p>' +
-                    '<p><b>Collared: </b>' + bear.collared + '</p>' +
-                    '<p><b>Location: </b>' + marker.position + '</p>' +
-              '</div>');
+    //   for (let key in bears) {
+    //         bear = bears[key];
 
-            // Inside the loop we call bindInfoWindow passing it the marker,
-            // map, infoWindow and contentString
-            bindInfoWindow(marker, map, infoWindow, html);
-      }
+    //         // Define the marker
+    //             marker = new google.maps.Marker({
+    //                 position: new google.maps.LatLng(37.2887639, -122.0172811),
+    //                 map: map,
+    //                 title: 'Bear ID: ' + bear.bearId,
+    //                 icon: '/static/img/polar.png'
+    //             });
 
-    });
+    //         // Define the content of the infoWindow
+    //         html = (
+    //           '<div class="window-content">' +
+    //                 '<img src="/static/img/polarbear.jpg" alt="polarbear" style="width:150px;" class="thumbnail">' +
+    //                 '<p><b>Bear gender: </b>' + bear.gender + '</p>' +
+    //                 '<p><b>Bear birth year: </b>' + bear.birthYear + '</p>' +
+    //                 '<p><b>Year captured: </b>' + bear.capYear + '</p>' +
+    //                 '<p><b>Collared: </b>' + bear.collared + '</p>' +
+    //                 '<p><b>Location: </b>' + marker.position + '</p>' +
+    //           '</div>');
+
+    //         // Inside the loop we call bindInfoWindow passing it the marker,
+    //         // map, infoWindow and contentString
+    //         bindInfoWindow(marker, map, infoWindow, html);
+    //   }
+
+    // });
 
     // This function is outside the for loop.
     // When a marker is clicked it closes any currently open infowindows
@@ -106,5 +123,13 @@ function initMap() {
         });
     }
 }
+
+function addMarker(location) {
+        var marker = new google.maps.Marker({
+          position: location,
+          map: map
+        });
+        // markers.push(marker);
+      }
 
 google.maps.event.addDomListener(window, 'load', initMap);

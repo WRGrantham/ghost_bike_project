@@ -1,4 +1,5 @@
 var map;
+var mygbMarker;
 
 function initMap() {
 
@@ -125,10 +126,16 @@ function initMap() {
 }
 
 function addMarker(location) {
-        var marker = new google.maps.Marker({
-          position: location,
-          map: map
-        });
+        console.log("here")
+        if (mygbMarker != null) {
+            mygbMarker.setMap(null);
+        }    
+            mygbMarker = new google.maps.Marker({
+              position: location,
+              map: map
+            });
+        
+
         // markers.push(marker);
       }
 

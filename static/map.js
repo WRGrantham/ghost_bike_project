@@ -1,5 +1,6 @@
 var map;
 var mygbMarker;
+var locationData;
 
 function initMap() {
 
@@ -134,7 +135,13 @@ function addMarker(location) {
               position: location,
               map: map
             });
-        
+        // console.log(location.lat(), location.lng());
+        locationData = {"latitude": location.lat(), "longitude":location.lng()};
+        console.log(locationData)
+        // locationData = [{"a":"b", "c":"d"}]
+        $.post("latlong", locationData, function(){
+            console.log("WE DID IT")
+        });
 
         // markers.push(marker);
       }

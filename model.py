@@ -68,8 +68,8 @@ class Photo(db.Model):
     # submission_date = db.Column(db.Date)
     photo_blob = db.Column(db.LargeBinary, nullable=False)
     #Again, not sure about doing something with datetime here
-    # photo_lat = db.Column(db.String(15))
-    # photo_long = db.Column(db.String(15))
+    photo_lat = db.Column(db.String(20))
+    photo_long = db.Column(db.String(20))
     #Also not sure how to describe an address
 
 

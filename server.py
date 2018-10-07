@@ -5,7 +5,7 @@ from flask import Flask, render_template, request, redirect, jsonify, session, f
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, User, Location, Ghostbike, Photo
-import base64
+import base64, pdb
 
 app = Flask(__name__)
 app.secret_key = "yourkeynamehere"
@@ -98,7 +98,8 @@ def create_new_user_process():
 @app.route('/upload_gb_photo', methods=['GET', 'POST'])
 def upload_photo_sub():
     """submit photo form, for upload photo"""
-
+    if request.method == 'POST':
+        pdb.set_trace()
     print("pre_upload", request.method, session)
     print("THIS IS MY FUNCTION")
     if request.method == 'POST':
@@ -116,8 +117,7 @@ def upload_photo_sub():
             return redirect("/upload_gb_photo")
 
         # print(file.read())
-        print(session)
-
+        
         gb_photo = Photo(photo_blob=file.read(), submitted_by=session['user_id'])
         # need to add submission_date=Date.now() I think to gb_photo
         print(session['user_id'])
@@ -126,6 +126,8 @@ def upload_photo_sub():
         flash('photo successfully added!')
         print(type(gb_photo.photo_blob))
         return render_template("submit_gb_form.html", photo=base64.b64encode(gb_photo.photo_blob))
+    print(session)
+
     # Serve page!   
     return render_template("submit_gb_form.html", photo=None)
 
@@ -146,6 +148,18 @@ def upload_photo_sub():
 def display_testmap():
     """displays a map to test me being able to show a map at all"""
     return render_template("map.html")
+
+@app.route('/latlong', methods=['GET', 'POST'])
+def receive_coordinates():
+    """received latlong coordinates from map.js"""
+    #latlongdata = request.get_json()
+    latdata = request.form.get('latitude')
+    longdata = request.form.get('longitude')
+    print("This is the lat long data")
+    print(latdata, longdata)
+    # print(dir(latlongdata))
+
+    return render_template("base.html")
 
 
     

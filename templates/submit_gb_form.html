@@ -9,18 +9,19 @@
 
 
 
-    <form  method = "POST" 
+    <form  action="/upload_gb_photo" method = "POST" 
          enctype = "multipart/form-data">
-         <input type = "file" name = "file" />
-         <input type = "text" value = "2">
+         <input type = "file" name = "my_photo" accept = "image/*">
+         <input id="hiddenLat" name = "hiddenLat" type = "hidden" value = "">
+         <input id="hiddenLong" name = "hiddenLong" type = "hidden" value = "">
          <input type = "submit"/>
       </form>
 
 
-      {% if photo %}
+      <!-- {% if photo %}
         <img src="data:image/png:base64,{{photo}}">
 
-      {% endif %}
+      {% endif %} -->
         <!-- <button class="btn btn-lg btn-primary btn-block" type="submit">Upload Photo
         </button> -->
 

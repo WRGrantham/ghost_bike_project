@@ -66,7 +66,7 @@ class Photo(db.Model):
     # *Looks like I prooobably don't need this** submission_id = db.Column(db.Integer, autoincrement=True, nullable=False)
     # reminder DATE - format YYYY-MM-DD
     # submission_date = db.Column(db.Date)
-    photo_blob = db.Column(db.LargeBinary, nullable=False)
+    photo_blob = db.Column(db.String(20))
     #Again, not sure about doing something with datetime here
     photo_lat = db.Column(db.String(20))
     photo_long = db.Column(db.String(20))

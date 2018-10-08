@@ -126,6 +126,8 @@ function initMap() {
     }
 }
 
+google.maps.event.addDomListener(window, 'load', initMap);
+
 function addMarker(location) {
         console.log("here")
         if (mygbMarker != null) {
@@ -139,11 +141,13 @@ function addMarker(location) {
         locationData = {"latitude": location.lat(), "longitude":location.lng()};
         console.log(locationData)
         // locationData = [{"a":"b", "c":"d"}]
-        $.post("latlong", locationData, function(){
-            console.log("WE DID IT")
-        });
+        // $.post("latlong", locationData, function(){
+        //     console.log("WE DID IT")
+        // });
+        $("#hiddenLat").val(location.lat());
+        $("#hiddenLong").val(location.lng());
 
         // markers.push(marker);
       }
 
-google.maps.event.addDomListener(window, 'load', initMap);
+// google.maps.event.addDomListener(window, 'load', initMap);

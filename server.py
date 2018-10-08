@@ -98,34 +98,41 @@ def create_new_user_process():
 @app.route('/upload_gb_photo', methods=['GET', 'POST'])
 def upload_photo_sub():
     """submit photo form, for upload photo"""
-    if request.method == 'POST':
-        pdb.set_trace()
-    print("pre_upload", request.method, session)
+    # if request.method == 'POST':
+    #     pdb.set_trace()
+    # print("pre_upload", request.method, session)
     print("THIS IS MY FUNCTION")
     if request.method == 'POST':
         print("POSTTTTTTTTT!!!!!")
         print(request.files)
-        if 'file' not in request.files:
+        if 'my_photo' not in request.files:
             print("no file part")
             flash('No file part')
             return redirect("/upload_gb_photo")
-        file = request.files['file']
+        file = request.files['my_photo']
         print(dir(file))
         if file.filename == '':
             print("no selected fileeeeee")
             flash('No selected file')
             return redirect("/upload_gb_photo")
 
+        file.save('static/photos/' + file.filename)
+
         # print(file.read())
-        
-        gb_photo = Photo(photo_blob=file.read(), submitted_by=session['user_id'])
+
+
+
+        lat_data = request.form["hiddenLat"]
+        long_data = request.form["hiddenLong"]
+
+        gb_photo = Photo(photo_blob=file.filename, submitted_by=session['user_id'], photo_lat=lat_data, photo_long=long_data)
         # need to add submission_date=Date.now() I think to gb_photo
         print(session['user_id'])
         db.session.add(gb_photo)
         db.session.commit()
         flash('photo successfully added!')
         print(type(gb_photo.photo_blob))
-        return render_template("submit_gb_form.html", photo=base64.b64encode(gb_photo.photo_blob))
+        return render_template("submit_gb_form.html", photo=None)
     print(session)
 
     # Serve page!   

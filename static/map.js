@@ -1,6 +1,8 @@
 var map;
 var mygbMarker;
+// var gb_marker;
 var locationData;
+
 
 function initMap() {
 
@@ -59,7 +61,7 @@ function initMap() {
     });
 
     // Retrieving the information with AJAX
-    // $.get('/bears.json', function (bears) {
+    $.get('/gb.json', function (ghostbikes) {
       // Attach markers to each bear location in returned JSON
       // JSON looks like:
       // {
@@ -73,27 +75,30 @@ function initMap() {
       //    "gender": "F"
       //   },...
       // }
-      let bear, marker, html;
+      let ghostbike, gb_marker, html;
       // map: map,
       //               title: 'Bear ID: ' + bear.bearId,
       //               icon: '/static/img/polar.png'
-      marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(37.2887639, -122.0172811),
+
+      // ------THIS IS MY OWN MARKER SEPERATE FROM BEAR DEMO------
+      // marker = new google.maps.Marker({
+      //               position: new google.maps.LatLng(37.2887639, -122.0172811),
+      //               map: map,
+      //               title: 'HI',
+      //               // icon: '/static/img/polar.png'
+      //           });
+      // -----END MY MARKER--------
+
+      for (let key in ghostbikes) {
+            ghostbike = ghostbikes[key];
+
+            // Define the marker
+                gb_marker = new google.maps.Marker({
+                    position: new google.maps.LatLng(ghostbike.photoLat, ghostbike.photoLong),
                     map: map,
-                    title: 'HI',
-                    // icon: '/static/img/polar.png'
+                    title: 'Ghostbike ID: ' + ghostbike.photoId,
+                    icon: '/static/img/medium_white_bike.png'
                 });
-
-    //   for (let key in bears) {
-    //         bear = bears[key];
-
-    //         // Define the marker
-    //             marker = new google.maps.Marker({
-    //                 position: new google.maps.LatLng(37.2887639, -122.0172811),
-    //                 map: map,
-    //                 title: 'Bear ID: ' + bear.bearId,
-    //                 icon: '/static/img/polar.png'
-    //             });
 
     //         // Define the content of the infoWindow
     //         html = (
@@ -109,9 +114,9 @@ function initMap() {
     //         // Inside the loop we call bindInfoWindow passing it the marker,
     //         // map, infoWindow and contentString
     //         bindInfoWindow(marker, map, infoWindow, html);
-    //   }
+      }
 
-    // });
+    });
 
     // This function is outside the for loop.
     // When a marker is clicked it closes any currently open infowindows
@@ -128,6 +133,11 @@ function initMap() {
 
 google.maps.event.addDomListener(window, 'load', initMap);
 
+// Could I create a function with an if-condition to check if we were getting info 
+// from the AJAX call to the table, and if we werent, then to let the function
+// addMarker run like it does below?
+
+
 function addMarker(location) {
         console.log("here")
         if (mygbMarker != null) {
@@ -140,14 +150,17 @@ function addMarker(location) {
         // console.log(location.lat(), location.lng());
         locationData = {"latitude": location.lat(), "longitude":location.lng()};
         console.log(locationData)
-        // locationData = [{"a":"b", "c":"d"}]
-        // $.post("latlong", locationData, function(){
-        //     console.log("WE DID IT")
-        // });
+
+        
         $("#hiddenLat").val(location.lat());
         $("#hiddenLong").val(location.lng());
+        var date = new Date();
+        var timestamp = date.getTime();
+        $("#hiddenTime").val(timestamp);
+        console.log(timestamp)
 
         // markers.push(marker);
       }
+
 
 // google.maps.event.addDomListener(window, 'load', initMap);

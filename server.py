@@ -124,11 +124,16 @@ def upload_photo_sub():
 
         lat_data = request.form["hiddenLat"]
         long_data = request.form["hiddenLong"]
+        submission_timestamp = request.form["hiddenTime"]
+        user_date = request.form["gbPhotoDate"]
 
-        gb_photo = Photo(photo_blob=file.filename, submitted_by=session['user_id'], photo_lat=lat_data, photo_long=long_data)
-        # need to add submission_date=Date.now() I think to gb_photo
+
+        gb_photo = Photo(photo_blob=file.filename, submitted_by=session['user_id'], 
+            photo_lat=lat_data, photo_long=long_data, submission_date=submission_timestamp, user_date=user_date)
+
         print(session['user_id'])
         db.session.add(gb_photo)
+
         db.session.commit()
         flash('photo successfully added!')
         print(type(gb_photo.photo_blob))
@@ -151,30 +156,55 @@ def upload_photo_sub():
 
 #     return render_template("submit_gb_form.html")
 
-@app.route('/testmap', methods=['GET'])
-def display_testmap():
-    """displays a map to test me being able to show a map at all"""
-    return render_template("map.html")
+# @app.route('/gb_locations', methods=['GET'])
+# def display_testmap():
+#     """displays a map to test me being able to show a map at all"""
+#     return render_template("map.html")
 
-@app.route('/latlong', methods=['GET', 'POST'])
-def receive_coordinates():
-    """received latlong coordinates from map.js"""
-    #latlongdata = request.get_json()
-    latdata = request.form.get('latitude')
-    longdata = request.form.get('longitude')
-    print("This is the lat long data")
-    print(latdata, longdata)
-    # print(dir(latlongdata))
 
-    return render_template("base.html")
 
+
+# @app.route('/testmap', methods=['GET'])
+# def display_testmap():
+#     """displays a map to test me being able to show a map at all"""
+#     return render_template("map.html")
+
+# @app.route('/latlong', methods=['GET', 'POST'])
+# def receive_coordinates():
+#     """received latlong coordinates from map.js"""
+#     latlongdata = request.get_json(force=True)
+#     #latdata = request.form.get('latitude')
+#     #longdata = request.form.get('longitude')
+#     print("This is the lat long data")
+#     print(latlongdata)
+#     # print(dir(latlongdata))
+
+    # return render_template("base.html")
+
+@app.route('/gb_locations', methods=['GET', 'POST'])
+def show_markers():
+    """displays user submitted gb markers on a map"""
 
     
+    return render_template("gb_locations.html")
 
+@app.route('/gb.json')
+def gb_info():
+    """json info about ghostbike photos locations"""
 
-
-
-
+    ghostbikes = {
+        photo.photo_id: {
+            "photoId": photo.photo_id,
+            "submittedBy": photo.submitted_by,
+            "ghostbikeId": photo.ghostbike_id,
+            "submissionDate": photo.submission_date,
+            "userDate": photo.user_date,
+            "photoLat": photo.photo_lat,
+            "photoLong": photo.photo_long
+        }
+        for photo in Photo.query.limit(50)}
+    print("about to jsonify ghostbikes")
+    return jsonify(ghostbikes)
 
 
 #---------------------------------------------------------------------#

@@ -14,7 +14,14 @@
          <input type = "file" name = "my_photo" accept = "image/*">
          <input id="hiddenLat" name = "hiddenLat" type = "hidden" value = "">
          <input id="hiddenLong" name = "hiddenLong" type = "hidden" value = "">
-         <input type = "submit"/>
+         <input id="hiddenTime" name = "hiddenTime" type = "text" value = "">
+         
+         <label for="datePhotoTaken">Date photo was taken</label>
+         <input type="date" id="datePhotoTaken" name="gbPhotoDate"
+               value="2018-07-22"
+               min="2000-01-01" max="2020-12-31" />
+  
+          <input type = "submit"/>
       </form>
 
 

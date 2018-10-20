@@ -22,8 +22,8 @@ class Location(db.Model):
     __tablename__ = "gb_map_locations"
 
     marker_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    gb_lat = db.Column(db.String(15), nullable=True)
-    gb_long = db.Column(db.String(15), nullable=True)
+    gb_lat = db.Column(db.String(20), nullable=True)
+    gb_long = db.Column(db.String(20), nullable=True)
     gb_id = db.Column(db.Integer, db.ForeignKey('ghostbikes.ghostbike_id'))
     #ghostbike_id is the foreign key from the ghostbikes and ghostbike_photos tables
 
@@ -40,13 +40,8 @@ class Ghostbike(db.Model):
 
     ghostbike_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     accident_date = db.Column(db.Integer, nullable=True)
-    #I need to figure out datetime for accident_date
     cyclist_name = db.Column(db.String(50), nullable=True)
-    #maybe I can get away with two cyclist_name entries for one incident if
-    #that's what happened
     in_memoriam = db.Column(db.String(1000), nullable=True)
-    #short blurb about the cyclist, not sure if it belongs in a table because so
-    #many characters
     is_verified = db.Column(db.Integer, nullable=False)
 
     def __repr__(self):
@@ -65,7 +60,8 @@ class Photo(db.Model):
     ghostbike_id = db.Column(db.Integer, db.ForeignKey('ghostbikes.ghostbike_id'))
     # *Looks like I prooobably don't need this** submission_id = db.Column(db.Integer, autoincrement=True, nullable=False)
     # reminder DATE - format YYYY-MM-DD
-    # submission_date = db.Column(db.Date)
+    submission_date = db.Column(db.String(100))
+    user_date = db.Column(db.String(20))
     photo_blob = db.Column(db.String(20))
     #Again, not sure about doing something with datetime here
     photo_lat = db.Column(db.String(20))

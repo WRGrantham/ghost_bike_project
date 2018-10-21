@@ -23,9 +23,15 @@ function initMap() {
         mapTypeId: google.maps.MapTypeId.ROADMAP
     });
 
-    map.addListener('click', function(event) {
+    let url = window.location.href;
+    console.log(url);
+
+    if (! url.includes("/gb_locations")){
+        map.addListener('click', function(event) {
           addMarker(event.latLng);
         });
+
+    }
 
 
     console.log("HElloo??")
@@ -163,4 +169,3 @@ function addMarker(location) {
       }
 
 
-// google.maps.event.addDomListener(window, 'load', initMap);

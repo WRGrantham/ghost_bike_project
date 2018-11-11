@@ -1,19 +1,30 @@
 {% extends 'base.html' %}
 
 {% block head %}
+<link href="/static/homepage.css" rel="stylesheet"></link>
 {% endblock %}
 
 {% block body %}
 
 
-<div>
-    <p>Default map image goes here</p>
+<div class="background-div">
+
+        <img src="/static/andy_barter.jpg">
+
+        <div class="text" id="contains-text">
+                <h1>Ghost Bikes</h1>
+        </div>
+
+        <div class="definition-text">
+            <h1> n. a roadside memorial
+            placed where a cyclist has been killed
+             or severely injured, usually by a motor vehicle.
+             An intended reminder to share the road.<h1>
+
+         </div>
 </div>
 
 
-<footer>
-    <p>People deserve to be remembered</p>
-</footer>
 
 <script>
     function updateButton(data) {
@@ -27,12 +38,11 @@
     }
 
     function checkLogin(){
-        //use ajax to make a call to the checkLogin() route
+        
         console.log("In checkLogin");
         $.get('/check_login', updateButton);
     }
 
-    // checkLogin();
 </script>
 
 {% endblock %}

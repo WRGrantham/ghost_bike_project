@@ -1,37 +1,4 @@
 const MAPSTYLES = [
-    // {
-    //     "featureType": "water",
-    //     "elementType": "geometry.fill",
-    //     "stylers": [
-    //         {
-    //             "color": "#A0BFDB"
-    //         }
-    //     ]
-    // },
-    // {
-    //     "featureType": "water",
-    //     "elementType": "labels.text.fill",
-    //     "stylers": [
-    //         {
-    //             "visibility": "simplified"
-    //         },
-    //         {
-    //             "color": "#cccccc"
-    //         }
-    //     ]
-    // },
-    // {
-    //     "featureType": "water",
-    //     "elementType": "labels.icon",
-    //     "stylers": [
-    //         {
-    //             "visibility": "simplified"
-    //         },
-    //         {
-    //             "color": "#FFFFFF"
-    //         }
-    //     ]
-    // },
     {
         "elementType": "labels.text.fill",
         "stylers": [
@@ -40,6 +7,7 @@ const MAPSTYLES = [
             }
         ]
     },
+
     {
         "elementType": "labels.icon",
         "stylers": [
@@ -48,24 +16,7 @@ const MAPSTYLES = [
             }
         ]
     },
-    // {
-    //     "featureType": "landscape.natural.landcover",
-    //     "elementType": "geometry.fill",
-    //     "stylers": [
-    //         {
-    //             "color": "#241108"
-    //         }
-    //     ]
-    // },
-    // {
-    //     "featureType": "landscape.natural.terrain",
-    //     "elementType": "geometry.fill",
-    //     "stylers": [
-    //         {
-    //             "color": "#04162b"
-    //         }
-    //     ]
-    // },
+
     {
         "featureType": "administrative",
         "elementType": "labels.text.stroke",
@@ -78,46 +29,7 @@ const MAPSTYLES = [
             }
         ]
     },
-    // {
-    //     "featureType": "landscape.man_made",
-    //     "stylers": [
-    //         {
-    //             "color": "#04162b"
-    //         }
-    //     ]
-    // },
-    // {
-    //     "featureType": "poi.business",
-    //     "stylers": [
-    //         {
-    //             "color": "#04162b"
-    //         }
-    //     ]
-    // },
-    // {
-    //     "featureType": "poi.attraction",
-    //     "stylers": [
-    //         {
-    //             "color": "#04162b"
-    //         }
-    //     ]
-    // },
-    // {
-    //     "featureType": "landscape",
-    //     "stylers": [
-    //         {
-    //             "color": "#04162b"
-    //         }
-    //     ]
-    // },
-    // {
-    //     "featureType": "poi",
-    //     "stylers": [
-    //         {
-    //             "color": "#04162b"
-    //         }
-    //     ]
-    // },
+
     {
         "featureType": "administrative.province",
         "stylers": [

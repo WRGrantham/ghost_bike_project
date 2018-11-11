@@ -1,4 +1,3 @@
-"""Demonstration of Google Maps."""
 
 from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, redirect, jsonify, session, flash
@@ -8,22 +7,17 @@ from model import connect_to_db, db, User, Location, Ghostbike, Photo
 import base64, pdb
 
 app = Flask(__name__)
-app.secret_key = "yourkeynamehere"
+app.secret_key="yourkeynamehere"
 app.jinja_env.undefined = StrictUndefined
 
 #---------------------------------------------------------------------#
 
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
     """show homepage"""
 
     return render_template("homepage.html")
 
-# @app.route('/login', methods=['GET'])
-# def login_form():
-#     """form for username/pw login"""
-    
-#     return render_template("login_form.html")
 
 @app.route('/logout', methods=['GET'])
 def logout():
@@ -86,10 +80,10 @@ def create_new_user_process():
             return redirect("/create_new_user")
         else:
             user = User(username=username, password=password)
-            session["user_id"] = user.user_id
             print(session)
             db.session.add(user)
             db.session.commit()
+            session["user_id"] = user.user_id
 
             return render_template("homepage.html")
 
@@ -97,10 +91,7 @@ def create_new_user_process():
 
 @app.route('/upload_gb_photo', methods=['GET', 'POST'])
 def upload_photo_sub():
-    """submit photo form, for upload photo"""
-    # if request.method == 'POST':
-    #     pdb.set_trace()
-    # print("pre_upload", request.method, session)
+
     print("THIS IS MY FUNCTION")
     if request.method == 'POST':
         print("POSTTTTTTTTT!!!!!")
@@ -116,16 +107,22 @@ def upload_photo_sub():
             flash('No selected file')
             return redirect("/upload_gb_photo")
 
-        file.save('static/photos/' + file.filename)
-
-        # print(file.read())
-
-
-
         lat_data = request.form["hiddenLat"]
         long_data = request.form["hiddenLong"]
         submission_timestamp = request.form["hiddenTime"]
         user_date = request.form["gbPhotoDate"]
+
+        if lat_data == '':
+            flash("No location! Please click the map to mark photo location")
+            return redirect("/upload_gb_photo")
+
+        file.save('static/photos/' + file.filename)
+
+
+        # lat_data = request.form["hiddenLat"]
+        # long_data = request.form["hiddenLong"]
+        # submission_timestamp = request.form["hiddenTime"]
+        # user_date = request.form["gbPhotoDate"]
 
 
         gb_photo = Photo(photo_blob=file.filename, submitted_by=session['user_id'], 
@@ -143,50 +140,22 @@ def upload_photo_sub():
     # Serve page!   
     return render_template("submit_gb_form.html", photo=None)
 
-# @app.route('/submit_gb_photo', methods=['POST'])
-# def submit_photo_sub():
-#     """actually submits photo and commits to db"""
-
-#     file = request.file["file"]
-#     user = User(username=username, password=password)
-#     session["user_id"] = user.user_id
-#     gb_photo = Photo(photo_blob="file")
-#     db.session.add(gb_photo)
-#     db.session.commit()
-
-#     return render_template("submit_gb_form.html")
-
-# @app.route('/gb_locations', methods=['GET'])
-# def display_testmap():
-#     """displays a map to test me being able to show a map at all"""
-#     return render_template("map.html")
-
-
-
-
-# @app.route('/testmap', methods=['GET'])
-# def display_testmap():
-#     """displays a map to test me being able to show a map at all"""
-#     return render_template("map.html")
-
-# @app.route('/latlong', methods=['GET', 'POST'])
-# def receive_coordinates():
-#     """received latlong coordinates from map.js"""
-#     latlongdata = request.get_json(force=True)
-#     #latdata = request.form.get('latitude')
-#     #longdata = request.form.get('longitude')
-#     print("This is the lat long data")
-#     print(latlongdata)
-#     # print(dir(latlongdata))
-
-    # return render_template("base.html")
 
 @app.route('/gb_locations', methods=['GET', 'POST'])
 def show_markers():
-    """displays user submitted gb markers on a map"""
 
-    
     return render_template("gb_locations.html")
+
+
+
+@app.route('/gb_photo_gallery', methods=['GET'])
+def display_all_photos():
+    """function to query photo table and display photos"""
+
+
+    return render_template("gb_photo_gallery.html")
+
+
 
 @app.route('/gb.json')
 def gb_info():
@@ -200,7 +169,8 @@ def gb_info():
             "submissionDate": photo.submission_date,
             "userDate": photo.user_date,
             "photoLat": photo.photo_lat,
-            "photoLong": photo.photo_long
+            "photoLong": photo.photo_long,
+            "photoBlobName": photo.photo_blob
         }
         for photo in Photo.query.limit(50)}
     print("about to jsonify ghostbikes")

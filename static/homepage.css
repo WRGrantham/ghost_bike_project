@@ -1,0 +1,43 @@
+.background-div {
+  position: left;
+  width: 1500px;
+  height: 1000%;
+  z-index: 1;
+  top: 0;
+  right: -600px;
+  background-color: transparent! important;
+  padding: 0px;
+  box-shadow: 0 0 20px 20px rgba(255, 255, 255, 0.2);
+  background-color :rgba(0,0,0,0.5);
+}
+
+.text{
+  position: absolute;
+  width: 80%
+  height: 180px;
+  color: white;
+  top: 230px;
+  z-index: 2;
+  background-color: 0,0,0,0.5;
+}
+
+.text h1 {
+  font-size: 40pt;
+}
+
+.definition-text{
+  position: absolute;
+  width: 400px;
+  height:250px;
+  top: 300px;
+  left: 100px;
+  z-index: 3;
+  color: white;
+  background-color: 0,0,0,0.5;
+}
+
+.definition-text h1{
+  font-size: 28pt;
+  color: white;
+  font-style: italic;
+}

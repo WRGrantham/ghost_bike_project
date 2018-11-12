@@ -4,10 +4,10 @@ from flask import Flask, render_template, request, redirect, jsonify, session, f
 from flask_debugtoolbar import DebugToolbarExtension
 
 from model import connect_to_db, db, User, Location, Ghostbike, Photo
-import base64, pdb
+import base64, pdb, os
 
 app = Flask(__name__)
-app.secret_key="yourkeynamehere"
+app.secret_key=os.environ["app_secret_key"]
 app.jinja_env.undefined = StrictUndefined
 
 #---------------------------------------------------------------------#
